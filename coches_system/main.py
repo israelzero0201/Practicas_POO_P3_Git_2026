@@ -1,4 +1,4 @@
-from coches import coches
+from coches import cochesBD
 from tkinter import Label,Entry,Button,Tk,messagebox
 
 
@@ -153,7 +153,7 @@ class App:
                 messagebox.showerror(title="...¡ Verifica por favor !...",message="...¡Esta Accion no pudo realizarse en este momento!...")
        
     def insertar_controller(self):
-        coche1=coches.Coches(self.marca.get(),self.color.get(),self.modelo.get(),self.velocidad.get(),self.potencia.get(),self.asientos.get())
+        coche1=cochesBD.cochesBD(self.marca.get(),self.color.get(),self.modelo.get(),self.velocidad.get(),self.potencia.get(),self.asientos.get())
         respuesta=coche1.insertar()
         self.respuesta_sql(respuesta)
         del coche1                 
@@ -162,13 +162,13 @@ class App:
         id=self.id.get()
         resp=self.confirmacion_eliminar("eliminar")
         if resp:
-           respuesta=coches.Coches.eliminar(id)
+           respuesta=cochesBD.cochesBD.eliminar(id)
         else:
             respuesta=False   
         self.respuesta_sql(respuesta)
   
     def consultar_controller(self,filas):
-       registros=coches.Coches.consultar()
+       registros=cochesBD.cochesBD.consultar()
        if len(registros)>0:
             num_coches=1
             for fila in registros:
@@ -180,14 +180,14 @@ class App:
            
     def modificar_controller(self):
         id=self.id.get()
-        coche1=coches.Coches(self.marca.get(),self.color.get(),self.modelo.get(),self.velocidad.get(),self.potencia.get(),self.asientos.get())
+        coche1=cochesBD.cochesBD(self.marca.get(),self.color.get(),self.modelo.get(),self.velocidad.get(),self.potencia.get(),self.asientos.get())
         respuesta=coche1.actualizar(id)
         self.respuesta_sql(respuesta)
         del coche1        
 
     def buscar_controller(self,tipo_accion):
         id=self.id.get()
-        coche1=coches.Coches.buscar(id)
+        coche1=cochesBD.cochesBD.buscar(id)
         if len(coche1)>0: 
             messagebox.showinfo(title="...¡ Registro Encontrado !...",message=f"...¡El registro fue encontrado con exito, puedes {tipo_accion}!...")
             self.cambiar_estado_btn(True,tipo_accion) 
